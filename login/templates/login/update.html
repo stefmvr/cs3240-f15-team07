@@ -18,13 +18,13 @@
 </form>-->
 <form action="{%url 'login:update_page'%}" method="post">
     {% csrf_token %}
-    <input id = "generate" name = "generate" type="submit" onmouseover="colorChange('generate', false, '#001E77', '#5B84FF')" onmouseout="colorChange('generate', true, '#001E77', '#5B84FF')" value="Get New Key" style="float:left;font-size:100%; height:21px; width:100px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+    <input id = "generate" name = "generate" type="submit" onmouseover="colorChange('generate', false, '#001E77', '#5B84FF')" onmouseout="colorChange('generate', true, '#001E77', '#5B84FF')" value="Get New Key" style="float:left;font-size:100%; height:21px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
     <div style="height:12px; width:5px;" ></div>
 
 </form>
 <form action="{%url 'login:logged_in_page'%}">
     {% csrf_token %}
-    <input id = "back" type="submit" onmouseover="colorChange('back', false, '#001E77', '#5B84FF')" onmouseout="colorChange('back', true, '#001E77', '#5B84FF')" value="Back" style="font-size:100%; height:21px; width:100px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+    <input id = "back" type="submit" onmouseover="colorChange('back', false, '#001E77', '#5B84FF')" onmouseout="colorChange('back', true, '#001E77', '#5B84FF')" value="Back" style="font-size:100%; height:21px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
 </form>
 {%if message%}
 <p>{{message}}</p>
@@ -38,4 +38,4 @@
     <div style="height:12px; width:5px;" ></div>
 
 </form>-->
-<
+
