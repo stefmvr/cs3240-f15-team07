@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}{% load postman_tags %}
+{% block title %}{% trans "Messaging" %}{% endblock %}
+{% block extrahead %}{{ block.super }}
+<link type="text/css" media="all" rel="stylesheet" href="
+{# dj v1.4 #}{% load static %}{% static 'postman/css/postman.css' %}
+{# dj v1.3 #}{# {{ STATIC_URL }}postman/css/postman.css #}
+{# dj v1.2 #}{# {{ MEDIA_URL }}postman/css/postman.css #}
+" />{% endblock %}
+{% block postman_menu %}
+<script>
+    function colorChange(input, out, newColor, oldColor) {
+        if(!out) {
+            document.getElementById(input).style.backgroundColor = newColor;
+        } else {
+            document.getElementById(input).style.backgroundColor = oldColor;
+        }
+    }
+</script>
+<ul id="postman_menu" style="list-style-type:none" >{% postman_unread as unread_count %}
+ <!--<li><a href="{% url 'postman:inbox' %}">&raquo;&nbsp;{% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+ <li><a href="{% url 'postman:sent' %}">&raquo;&nbsp;{% trans "Sent Messages" %}</a></li>
+ <li><a href="{% url 'postman:write' %}">&raquo;&nbsp;{% trans "Write" %}</a></li>
+ <li><a href="{% url 'postman:archives' %}">&raquo;&nbsp;{% trans "Archives" %}</a></li>
+ <li><a href="{% url 'postman:trash' %}">&raquo;&nbsp;{% trans "Trash" %}</a></li> -->
+ <li><a href="{% url 'postman:inbox' %}" id = "inbox" type="button" onmouseover="colorChange('inbox', false, '#001E77', '#5B84FF')" onmouseout="colorChange('inbox', true, '#001E77', '#5B84FF')" value="Trash" style="text-decoration:none;text-align:center; display: block; font-size: 100%; height:20px; width:70px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0">Inbox</a><div style="height:3px;width:70px;"></div></li>
+ <li><a href="{% url 'postman:sent' %}" id = "sent" type="button" onmouseover="colorChange('sent', false, '#001E77', '#5B84FF')" onmouseout="colorChange('sent', true, '#001E77', '#5B84FF')" value="Trash" style="text-decoration:none;text-align:center; display: block; font-size: 100%; height:20px; width:70px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0">Sent</a><div style="height:3px;width:70px;"></div></li>
+ <li><a href="{% url 'postman:write' %}" id = "write" type="button" onmouseover="colorChange('write', false, '#001E77', '#5B84FF')" onmouseout="colorChange('write', true, '#001E77', '#5B84FF')" value="Trash" style="text-decoration:none;text-align:center; display: block; font-size: 100%; height:20px; width:70px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0">Write</a><div style="height:3px;width:70px;"></div></li>
+ <li><a href="{% url 'postman:archives' %}" id = "archives" type="button" onmouseover="colorChange('archives', false, '#001E77', '#5B84FF')" onmouseout="colorChange('archives', true, '#001E77', '#5B84FF')" value="Trash" style="text-decoration:none;text-align:center; display: block; font-size: 100%; height:20px; width:70px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0">Archives</a><div style="height:3px;width:70px;"></div></li>
+ <li><a href="{% url 'postman:trash' %}" id = "trash" type="button" onmouseover="colorChange('trash', false, '#001E77', '#5B84FF')" onmouseout="colorChange('trash', true, '#001E77', '#5B84FF')" value="Trash" style="text-decoration:none;text-align:center; display: block; font-size: 100%; height:20px; width:70px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0">Trash</a><div style="height:3px;width:70px;"></div></li>
+ <li><a href="{% url 'login:logged_in_page' %}" id = "messages" type="button" onmouseover="colorChange('messages', false, '#001E77', '#5B84FF')" onmouseout="colorChange('messages', true, '#001E77', '#5B84FF')" value="Messages" style="text-decoration:none;text-align:center; display: block; font-size: 100%; height:20px; width:70px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact;">Home</a></li>
+</ul>
+{% endblock %}

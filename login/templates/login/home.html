@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<script>
+    function colorChange(input, out, newColor, oldColor) {
+        if(!out) {
+            document.getElementById(input).style.backgroundColor = newColor;
+            document.getElementById(input).style.color = "#FF6600";
+            document.getElementById(input+"pic").style.height = "50px";
+        } else {
+            document.getElementById(input).style.backgroundColor = oldColor;
+            document.getElementById(input).style.color = "white";
+            document.getElementById(input+"pic").style.height = "0px";
+        }
+    }
+</script>
+<form action="{% url 'login:login_page' %}">
+{% csrf_token %}
+<input id = "log" type="submit" onmouseover="colorChange('log', false, '#001E77', '#5B84FF')" onmouseout="colorChange('log', true, '#001E77', '#5B84FF')" value="Login" style="height:120px; width:300px; font-size: 400%; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+<img id="logpic" src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Virginia_Cavaliers_sabre.svg/1280px-Virginia_Cavaliers_sabre.svg.png" style="height:0px;">
+</form>
+<div style="height: 10px; width: 300px">
+
+</div>
+<form action="{% url 'login:register_page' %}">
+{% csrf_token %}
+<input id = "reg" type="submit" onmouseover="colorChange('reg', false, '#001E77', '#5B84FF')" onmouseout="colorChange('reg', true, '#001E77', '#5B84FF')" value="Register" style="height:120px; width:300px; font-size: 400%; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+<img id="regpic" src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Virginia_Cavaliers_sabre.svg/1280px-Virginia_Cavaliers_sabre.svg.png" style="height:0px;">
+</form>
+
+<div class="homepic" style="height: 0px; width: 300px">
+</div>
+
+
+
+<!--</div>-->
+<!--<form action="{% url 'login:home_page' %}" method="post">-->
+<!--{% csrf_token %}-->
+<!--<input id = "clear" name = "cleardb" type="submit" onmouseover="colorChange('clear', false, '#001E77', '#5B84FF')" onmouseout="colorChange('clear', true, '#001E77', '#5B84FF')" value="Clear DB" style="height:120px; width:250px; font-size: 400%; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>-->
+<!--<img id="clearpic" src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Virginia_Cavaliers_sabre.svg/1280px-Virginia_Cavaliers_sabre.svg.png" style="height:0px;">-->
+<!--</form>-->

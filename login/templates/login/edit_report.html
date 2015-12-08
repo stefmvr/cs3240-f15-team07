@@ -1,0 +1,195 @@
+<script>
+    function colorChange(input, out, newColor, oldColor) {
+        if(!out) {
+            document.getElementById(input).style.backgroundColor = newColor;
+        } else {
+            document.getElementById(input).style.backgroundColor = oldColor;
+        }
+    }
+</script>
+<style>
+	div{resize:both}
+</style>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Edit Report</title>   
+    </head>
+	<body>
+	
+	  <h1>Edit Report</h1>
+        <!-- Upload form. Note enctype attribute! -->
+
+
+{%if report.parent_folder%}
+<p>Current Folder: {{ report.parent_folder.name }}</p>
+{% endif %}
+
+<p>Change To: {% if parent %} {{ parent.name}} {% else %} root {% endif %}</p>
+
+<form action = "{% url 'login:edit_report' %}" method="post">
+    {% csrf_token %}
+
+    <div style="height:100px;width:500px;border:1px solid #ccc;overflow:auto;">
+        {%for folder in folders%}
+        <div>
+		<form action="{% url 'login:edit_report' %}" method="post">
+	        {% csrf_token %}
+			<input name="reportSelected" type="hidden" value={{report.id}} />
+		    <input name="whereToGo" type="hidden" value={{folder.id}} /> 
+            <input name="folderChoice" type="submit" id="{{folder.name}}" onmouseover="colorChange('{{folder.name}}', false, '#001E77', '#5B84FF')" onmouseout="colorChange('{{folder.name}}', true, '#001E77', '#5B84FF')" value="{{folder.name}}" style="float:left;font-size: 100%; height:21px; width:100% ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+		</form>   
+		
+        </div>
+        <br><br>
+        {%endfor%}
+
+    </div>
+</form>
+
+
+    {%if parent%}
+<form action = "{% url 'login:edit_report' %}" method="post">
+    {% csrf_token %}
+    <input name = "backOut" id = "backOut" type="submit" onmouseover="colorChange('backOut', false, '#001E77', '#5B84FF')" onmouseout="colorChange('backOut', true, '#001E77', '#5B84FF')" value="Back Out of Current Folder" style="font-size: 100%; height:25px; width:300px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+    <input name="parentVar" type="hidden" value = {{parent.id}} style="height:0px; width:0px;">
+	<input name="reportSelected" type="hidden" value = {{report.id}} />
+</form>
+    {% endif %}
+
+
+<form action="{% url 'login:edit_report' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+
+    {{ form.as_p }}
+	  
+	<input type="file" name="report_files" multiple>
+	<p>{{ form.non_field_errors }}</p>
+
+	<p><input id="saveReport" name="saveReportChanges" type="submit" onmouseover="colorChange('saveReport', false, '#001E77', '#5B84FF')" onmouseout="colorChange('saveReport', true, '#001E77', '#5B84FF')" value="Save Changes" style="font-size:100%; height:50px; width:200px ; border-radius:4%; background-color: #5B84FF; color:white; font-family:Impact; border-width: 0"/></p>	
+	{%if parent%}
+		<input name="parentVar" type="hidden" value = {{parent.id}} style="float:left;height:0px; width:0px;">
+	{%endif%}
+	<input name="reportSelected" type="hidden" value={{report.id}} />
+
+
+</form>
+
+<br><br>
+
+	<p>Modify Share Settings:</p>
+	<div style="height:200px;width:300px;border:1px solid #ccc;overflow:auto;">
+
+	{% if report_groupList %}	
+	{%for group in report_groupList %}
+		<div>
+			<input name="groupName" type="submit" id="{{group.group_name}}{{group.id}}" onmouseover="colorChange('{{group.group_name}}{{group.id}}', false, '#404040', '#909090')" onmouseout="colorChange('{{group.group_name}}{{group.id}}', true, '#404040', '#909090')" value="{{group.group_name}} ({{group.group_creator}})" style="float:left;font-size: 100%; height:21px; width:90%; border-radius: 4%; background-color: #909090; color: white; font-family: Impact; border-width: 0"/>
+			
+			<form action="{% url 'login:edit_report' %}" method="post">
+				{% csrf_token %}
+				<input name="deleteGroup" type="submit" id="{{group.group_name}}{{group.id}}delete" onmouseover="colorChange('{{group.group_name}}{{group.id}}delete', false, '#404040', '#909090')" onmouseout="colorChange('{{group.group_name}}{{group.id}}delete', true, '#404040', '#909090')" value=X style="float:left;font-size: 100%; height:21px; width:10%; border-radius: 4%; background-color: #909090; color: white; font-family: Impact; border-width: 0"/>
+				{% if parent %}
+					<input name="parentVar" type="hidden" value={{parent.id}} />
+				{% endif %}	
+				<input name="reportSelected" type="hidden" value={{report.id}} />
+				<input name="groupToRemove" type="hidden" value={{group.id}} />
+			</form>
+		</div>
+	{%endfor%}
+	{%endif%}
+
+	{% if report_userList %}	
+	{%for user in report_userList %}
+		<div>
+			<input name="userName" type="submit" id="{{user.username}}" onmouseover="colorChange('{{user.username}}', false, '#404040', '#909090')" onmouseout="colorChange('{{user.username}}', true, '#404040', '#909090')" value="{{user.username}}" style="float:left;font-size: 100%; height:21px; width:90%; border-radius: 4%; background-color: #909090; color: white; font-family: Impact; border-width: 0"/>
+			
+			<form action="{% url 'login:edit_report' %}" method="post">
+				{% csrf_token %}
+				<input name="deleteUser" type="submit" id="{{user.username}}delete" onmouseover="colorChange('{{user.username}}delete', false, '#404040', '#909090')" onmouseout="colorChange('{{user.username}}delete', true, '#404040', '#909090')" value=X style="float:left;font-size: 100%; height:21px; width:10%; border-radius: 4%; background-color: #909090; color: white; font-family: Impact; border-width: 0"/>
+				{% if parent %}
+					<input name="parentVar" type="hidden" value={{parent.id}} />
+				{% endif %}	
+				<input name="reportSelected" type="hidden" value={{report.id}} />
+				<input name="userToRemove" type="hidden" value={{user.username}} />
+			</form>
+		</div>
+	{%endfor%}
+	{%endif%}
+	</div>
+	
+	{%if groupList%}
+	<form action="{% url 'login:edit_report' %}" method="post">
+		{% csrf_token %}
+		<select name = "addGroupSelector" id="addGroupSelector">
+			<option value="--default--">Groups</option>
+			{%for g in groupList%}
+				<option value="{{g.id}}">{{g.group_name}} ({{g.group_creator}})</option>
+			{%endfor%}
+		</select>
+		{% if parent %}
+			<input name="parentVar" type="hidden" value={{parent.id}} />
+		{% endif %}	
+		<input name="reportSelected" type="hidden" value={{report.id}} />
+		<input id = "addGroup" type="submit" onmouseover="colorChange('addGroup', false, '#001E77', '#5B84FF')" onmouseout="colorChange('addGroup', true, '#001E77', '#5B84FF')" value="Add to Group" style="font-size: 100%; height:21px; width:155px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+	</form>
+	{%endif%}
+	
+	{%if userList%}
+	<form action="{% url 'login:edit_report' %}" method="post">
+		{% csrf_token %}
+		<select name = "addUserSelector" id="addUserSelector">
+			<option value="--default--">Users</option>
+			{%for u in userList%}
+				<option value="{{u.username}}">{{u.username}}</option>
+			{%endfor%}
+		</select>
+		{% if parent %}
+			<input name="parentVar" type="hidden" value={{parent.id}} />
+		{% endif %}	
+		<input name="reportSelected" type="hidden" value={{report.id}} />
+		<input id = "addUser" type="submit" onmouseover="colorChange('addUser', false, '#001E77', '#5B84FF')" onmouseout="colorChange('addUser', true, '#001E77', '#5B84FF')" value="Add to Shared Users" style="font-size: 100%; height:21px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+	</form>
+	{%endif%}
+
+
+
+<br><br>
+<p>Delete Report Files:</p>
+<div style="height:200px;width:500px;border:1px solid #ccc;overflow:auto;">
+	{% if report_files %}	
+	{%for file in report_files %}
+		<div>
+			<form action={{file.single_file.url}}>
+				{% csrf_token %}
+				<input name="fileSelected" type="hidden" value={{file.id}} />
+				<input name="parentVar" type="hidden" value={{parent.id}} />
+				<input name="reportSelected" type="hidden" value={{report.id}} />
+				<input name="fileChoice" type="submit" id="{{file.single_file.name}}{{file.id}}" onmouseover="colorChange('{{file.single_file.name}}{{file.id}}', false, '#404040', '#909090')" onmouseout="colorChange('{{file.single_file.name}}{{file.id}}', true, '#404040', '#909090')" value="{{file.single_file.name}}" style="float:left;font-size: 100%; height:21px; width:90%; border-radius: 4%; background-color: #909090; color: white; font-family: Impact; border-width: 0"/>
+			</form>
+			
+			<form action="{% url 'login:edit_report' %}" method="post">
+				{% csrf_token %}
+				<input name="deleteFile" type="submit" id="{{file.single_file.name}}{{file.id}}delete" onmouseover="colorChange('{{file.single_file.name}}{{file.id}}delete', false, '#404040', '#909090')" onmouseout="colorChange('{{file.single_file.name}}{{file.id}}delete', true, '#404040', '#909090')" value=X style="float:left;font-size: 100%; height:21px; width:10%; border-radius: 4%; background-color: #909090; color: white; font-family: Impact; border-width: 0"/>
+				{% if parent %}
+					<input name="parentVar" type="hidden" value={{parent.id}} />
+				{% endif %}	
+				<input name="reportSelected" type="hidden" value={{report.id}} />
+				<input name="fileToDelete" type="hidden" value={{file.id}} />
+			</form>
+		</div>
+	{%endfor%}
+	{%endif%}
+</div>
+  
+		
+	<form action = "{% url 'login:my_reports_page' %}" method="post">
+			{% csrf_token %}
+			<p><input id="backButton" type="submit" onmouseover="colorChange('backButton', false, '#001E77', '#5B84FF')" onmouseout="colorChange('backButton', true, '#001E77', '#5B84FF')" value="Back" style="font-size:100%; height:50px; width:200px ; border-radius:4%; background-color: #5B84FF; color:white; font-family:Impact; border-width: 0"/></p>	
+			{%if parent%}
+				<input name="parentVar" type="hidden" value = {{parent.id}} style="float:left;height:0px; width:0px;">
+			{%endif%}
+		</form>
+
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<script>
+    function colorChange(input, out, newColor, oldColor) {
+        if(!out) {
+            document.getElementById(input).style.backgroundColor = newColor;
+        } else {
+            document.getElementById(input).style.backgroundColor = oldColor;
+        }
+    }
+</script>
+<style type="text/css">
+    form.inline{
+        float:left;
+    }
+</style>
+
+<form class = "inline" action="{% url 'login:register_page' %}" method = "post" >
+{% csrf_token %}
+
+    <input placeholder = "Username" type = "text" name = 'username'/>
+    <input placeholder = "Password" type = "password" name = 'password'/>
+    <input id = "reg" type="submit" onmouseover="colorChange('reg', false, '#001E77', '#5B84FF')" onmouseout="colorChange('reg', true, '#001E77', '#5B84FF')" value="Register" style="height:20px; width:80px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+<form class = "inline" action="{%url 'login:home_page'%}">
+    <div style="width:5px; height:20px; float:left"></div>
+    <input id = "home" type="submit" onmouseover="colorChange('home', false, '#001E77', '#5B84FF')" onmouseout="colorChange('home', true, '#001E77', '#5B84FF')" value="Home" style="height:20px; width:80px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form><br>
+{%if error%}
+    <p style="color: red">{{error}}</p>
+{%endif%}
