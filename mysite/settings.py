@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 
@@ -86,17 +86,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 import dj_database_url
 DATABASES = {
-	'default': dj_database_url.config()
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'mydatabase',
-#        'USER': 'wfg2af',
-#        'PASSWORD': 'password',
-#        #'USER': 'team7',
-#        #'PASSWORD': 'fall2015',
-#        'HOST': '127.0.0.1',
-#        'PORT': '5432'
-#    }
+	#'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mydatabase',
+        'USER': 'wfg2af',
+        'PASSWORD': 'password',
+        #'USER': 'team7',
+        #'PASSWORD': 'fall2015',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+    }
 }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
