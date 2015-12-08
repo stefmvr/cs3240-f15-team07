@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from login.models import ReportModel
 from login.models import SingleFileModel
+from login.models import UserAttributes
+from itertools import chain
 import json
 import os
 import zipfile
@@ -51,9 +53,14 @@ def get_reports(request):
         serializer = apiSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            reports = ReportModel.objects.filter(report_owner=serializer.data['username'])
-            rep_names = reports.values('report_title', 'report_body','id',)
-            dict_data = [entry for entry in rep_names]
+            currUser = User.objects.get(username=serializer.data['username'])
+            currAttr = UserAttributes.objects.get(user_name=serializer.data['username'])
+            rep_names = list(set(chain(ReportModel.objects.filter(report_owner=serializer.data['username']), currUser.reportmodel_set.all(),ReportModel.objects.filter(report_private=False))))
+            for group in currAttr.groups.all():
+                rep_names = list(set(chain(rep_names, group.reportmodel_set.all())))
+            dict_data = [{'report_title':each.report_title, 'report_body':each.report_body, 'id':each.id} for each in rep_names]
+            #rep_names.values('report_title', 'report_body','id',)
+            #dict_data = [entry for entry in rep_names]
             return Response(dict_data)
 
     return Response(False)
