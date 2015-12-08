@@ -361,6 +361,7 @@ def view_group(request):
 			group.delete()
 			return group_page(request)
 
+
 @login_required(login_url='/login/lg/')
 def group_page(request):
 	if request.method == 'POST':
