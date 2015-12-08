@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^login/', include('login.urls', namespace="login")),
+    url(r'^', include('login.urls', namespace="login")),
     url(r'^messages/', include('postman.urls', namespace='postman', app_name='postman')),
     #url(r'^files/'+path_end,'view'),
     url(r'^api/', include('api.urls', namespace="api")),
