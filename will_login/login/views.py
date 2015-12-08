@@ -83,7 +83,6 @@ def my_reports_page(request):
 				f.save()
 		if "backOut" in request.POST:
 			parentParent = Folder.objects.get(pk=request.POST["parentVar"]).parent_folder
-			print(parentParent)
 			parent = parentParent
 	reports = sorted(ReportModel.objects.filter(report_owner=request.user.username, parent_folder=parent), key=lambda report:report.report_title)
 	report_file_list = [(each, SingleFileModel.objects.filter(file_report=each), each.report_groups.all(), each.report_sharedwith.all()) for each in reports]
@@ -145,7 +144,6 @@ def levdistance(str1, str2):
 @login_required(login_url='/login/lg')
 def shared_with_me(request):
 	if request.method == 'POST':
-		print(request.POST)
 		if "searchInReports" in request.POST:
 			if request.POST["searchUsers"] != "" or request.POST["searchTerms"] != "":
 				reports = None
@@ -163,7 +161,6 @@ def shared_with_me(request):
 					userNameList = [user.username for user in filterUserList]
 
 					if len(userNameList) == 0:
-						print("NO USERS")
 						suggestedUsers = []
 						potentialUsers = {}
 						for searchUser in userSearchList:
@@ -173,15 +170,12 @@ def shared_with_me(request):
 								else:
 									potentialUsers[user] = mintwo(levdistance(user, searchUser), potentialUsers[user])
 						suggestedUsers = sorted(potentialUsers.items(), key = lambda a:a[1])
-						print(suggestedUsers)
 						suggestedUsers = [each[0] for each in suggestedUsers][:3]
-						print(suggestedUsers)
 						return render(request, "login/shared_with_me.html", {'user': request.user.username, 'message': "No users matched your username list.", 'suggestedUsers': suggestedUsers})
 					reports = [report for report in reports if report.report_owner in userNameList]
 				if request.POST["searchTerms"] != "":
 					searchTermList = [s.strip() for s in request.POST["searchTerms"].split(',')]
 					for term in searchTermList:
-						print(term)
 						reports = [report for report in reports if term.lower() in report.report_title.lower() or term.lower() in report.report_body.lower()]
 				if len(reports) == 0:
 					return render(request, "login/shared_with_me.html", {'user': request.user.username, 'message': "No reports matched your search."})
@@ -205,7 +199,6 @@ def shared_with_me(request):
 @login_required(login_url='/login/lg/')
 def edit_report(request):
 	if request.method == 'POST':
-		print(request.POST)
 		usrAttr = UserAttributes.objects.get(user_name=request.user.username)
 		groupList= sorted(usrAttr.groups.all(), key=lambda g:g.group_name)
 		if UserAttributes.objects.get(user_name = request.user.username).is_site_manager:
@@ -274,7 +267,6 @@ def edit_report(request):
 @login_required(login_url='/login/lg/')
 def submit_report(request):
 	if request.method == 'POST':
-		print(request.POST)
 		form = UploadReportForm(request.POST, request.FILES)
 		parent = None
 		if 'parentVar' in request.POST:
@@ -364,7 +356,6 @@ def view_group(request):
 @login_required(login_url='/login/lg/')
 def group_page(request):
 	if request.method == 'POST':
-		print(request.POST)
 		if 'creator' in request.POST:
 			usr = UserAttributes.objects.get(user_name = request.user.username)
 			gname = request.POST["groupToMake"]
