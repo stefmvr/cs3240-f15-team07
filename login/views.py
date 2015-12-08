@@ -360,6 +360,7 @@ def view_group(request):
 			group = Groups.objects.get(pk=request.POST["groupToDelete"])
 			group.delete()
 			return group_page(request)
+	return group_page(request)
 
 
 @login_required(login_url='/login/lg/')
