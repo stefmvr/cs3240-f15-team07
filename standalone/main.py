@@ -171,7 +171,7 @@ class Application(tk.Frame):
         filename = fdialog.askdirectory()
         for fl in self.list_files:
             head,tail = os.path.split(fl['single_file'])
-            path = "https://sleepy-hamlet-6170.herokuapp.com/media/" + fl['single_file']
+            path = "https://sleepy-hamlet-6170.herokuapp.com/media/" + fl['single_file'] + "/"
             #path = "http://127.0.0.1:8000/media/" + fl['single_file']
             newpath = filename + "/" + tail
             urllib.request.urlretrieve(path, newpath)
