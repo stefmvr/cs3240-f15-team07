@@ -1,0 +1,61 @@
+
+<script>
+    function colorChange(input, out, newColor, oldColor) {
+        if(!out) {
+            document.getElementById(input).style.backgroundColor = newColor;
+        } else {
+            document.getElementById(input).style.backgroundColor = oldColor;
+        }
+    }
+</script>
+<form action = "{% url 'login:site_manager_page' %}" method="post">
+{% csrf_token %}
+{%if makeList%}
+        <select name = "userSelector" id="userSelector" style="float:left;">
+            <option value="--default--">Users</option>
+            {%for u in makeList%}
+            <option value="{{u.user_name}}">{{u.user_name}}</option>
+            {%endfor%}
+        </select>
+        <div style="float:left;height:21px; width:5px"></div>
+    <input id = "make" type="submit" onmouseover="colorChange('make', false, '#001E77', '#5B84FF')" onmouseout="colorChange('make', true, '#001E77', '#5B84FF')" value="Make Site Manager" style="float:left;font-size: 100%; height:20px; width:155px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+{%endif%}
+
+</form>
+<br><br>
+<form action = "{% url 'login:site_manager_page' %}" method="post">
+{% csrf_token %}
+{%if suspendList%}
+        <select name = "suspendSelector" id="suspendSelector" style="float:left;">
+            <option value="--default--">Users</option>
+            {%for u in suspendList%}
+            <option value="{{u.username}}">{{u.username}}</option>
+            {%endfor%}
+        </select>
+        <div style="float:left;height:21px; width:5px"></div>
+    <input id = "suspend" type="submit" onmouseover="colorChange('suspend', false, '#001E77', '#5B84FF')" onmouseout="colorChange('suspend', true, '#001E77', '#5B84FF')" value="Suspend Account" style="float:left;font-size: 100%; height:20px; width:155px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+{%endif%}
+
+</form>
+<br>
+<form action = "{% url 'login:site_manager_page' %}" method="post">
+{% csrf_token %}
+{%if reactivateList%}
+        <select name = "reactivateSelector" id="reactivateSelector" style="float:left;">
+            <option value="--default--">Users</option>
+            {%for u in reactivateList%}
+            <option value="{{u.username}}">{{u.username}}</option>
+            {%endfor%}
+        </select>
+        <div style="float:left;height:21px; width:5px"></div>
+    <input id = "reactivate" type="submit" onmouseover="colorChange('reactivate', false, '#001E77', '#5B84FF')" onmouseout="colorChange('reactivate', true, '#001E77', '#5B84FF')" value="Reactivate Account" style="float:left;font-size: 100%; height:20px; width:155px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+{%endif%}
+
+</form>
+<br>
+<form action = "{% url 'login:logged_in_page' %}">
+    {% csrf_token %}
+     <input id = "home" type="submit" onmouseover="colorChange('home', false, '#001E77', '#5B84FF')" onmouseout="colorChange('home', true, '#001E77', '#5B84FF')" value="Home" style="font-size: 100%; height:40px; width:155px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+
+
+</form>

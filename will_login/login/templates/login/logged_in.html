@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<script>
+    function colorChange(input, out, newColor, oldColor) {
+        if(!out) {
+            document.getElementById(input).style.backgroundColor = newColor;
+        } else {
+            document.getElementById(input).style.backgroundColor = oldColor;
+        }
+    }
+</script>
+{%if user%}
+<h2>Welcome {{user}}!</h2>
+{%endif%}
+{%if siteManager%}
+<form action = "{% url 'login:site_manager_page' %}">
+    {% csrf_token %}
+     <input id = "manager" type="submit" onmouseover="colorChange('manager', false, '#001E77', '#5B84FF')" onmouseout="colorChange('manager', true, '#001E77', '#5B84FF')" value="Manage Users" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+{%endif%}
+<div style="height:10px; width:200px"></div>
+<form action = "{% url 'postman:inbox' %}">
+    {% csrf_token %}
+     <input id = "messages" type="submit" onmouseover="colorChange('messages', false, '#001E77', '#5B84FF')" onmouseout="colorChange('messages', true, '#001E77', '#5B84FF')" value="Messages   ( {{postman_unread_count}} )" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+<div style="height:10px; width:200px"></div>
+<form action = "{% url 'login:my_reports_page' %}">
+    {% csrf_token %}
+     <input id = "myReports" type="submit" onmouseover="colorChange('myReports', false, '#001E77', '#5B84FF')" onmouseout="colorChange('myReports', true, '#001E77', '#5B84FF')" value="My Reports" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+<div style="height:10px; width:200px"></div>
+<form action = "{% url 'login:group_page' %}">
+    {% csrf_token %}
+     <input id = "groups" type="submit" onmouseover="colorChange('groups', false, '#001E77', '#5B84FF')" onmouseout="colorChange('groups', true, '#001E77', '#5B84FF')" value="Groups" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+<div style="height:10px; width:200px"></div>
+<form action = "{% url 'login:update_page' %}">
+    {% csrf_token %}
+     <input id = "update" type="submit" onmouseover="colorChange('update', false, '#001E77', '#5B84FF')" onmouseout="colorChange('update', true, '#001E77', '#5B84FF')" value="Update Info" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+<div style="height:10px; width:200px"></div>
+<form action = "{% url 'login:delete_all' %}">
+    {% csrf_token %}
+     <input id = "del" type="submit" onmouseover="colorChange('del', false, '#001E77', '#5B84FF')" onmouseout="colorChange('del', true, '#001E77', '#5B84FF')" value="Delete All" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+<div style="height:10px; width:200px"></div>
+<form action = "{% url 'login:home_page' %}">
+    {% csrf_token %}
+     <input id = "logout" type="submit" onmouseover="colorChange('logout', false, '#001E77', '#5B84FF')" onmouseout="colorChange('logout', true, '#001E77', '#5B84FF')" value="Logout" style="font-size: 100%; height:50px; width:200px ; border-radius: 4%; background-color: #5B84FF; color: white; font-family: Impact; border-width: 0"/>
+</form>
+{%if key%}
+<p>Here is your private key: {{key}}</p>
+{%endif%}
